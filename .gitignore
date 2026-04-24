@@ -17,7 +17,6 @@ ENV/
 !.env.example
 secrets.json
 config.local.*
-storage/
 vector_store/
 index_store/
 docstore/
