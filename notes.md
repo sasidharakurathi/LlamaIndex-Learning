@@ -202,8 +202,8 @@ Documents → NodeParser → Nodes → Embeddings → Index
 ### Let's see how we can control our chunking via practical implementation
 Now we take control. No more defaults.
 
-1. Go to [Topic 2](practice/Module%201/Topic%201/)
-2. Open [.env.example](practice/Module%201/Topic%201/.env.example) and replace `YOUR_GEMINI_API_KEY` with your gemini api key
+1. Go to [Topic 2](practice/Module%201/Topic%202/)
+2. Open [.env.example](practice/Module%201/Topic%202/.env.example) and replace `YOUR_GEMINI_API_KEY` with your gemini api key
 3. Rename `.env.example` to `.env`
 4. Install all requriements
     ```bash
