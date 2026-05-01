@@ -1,0 +1,64 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]
+Loading weights: 100%|##########| 199/199 [00:00<00:00, 9143.22it/s]
+
+================ Automated Evaluation Faithfulness Results ================
+
+Score: 1.0
+
+================================================
+
+
+
+================ Manual Evaluation Faithfulness ================
+
+Query: 
+What projects has Sasidhar built?
+
+
+Context: 
+Check the knowledge_base.txt file for the context used in this evaluation.
+
+
+Response: 
+Sasidhar has built the following projects:
+
+*   A tool that implements local documentation indexing, scans Markdown files, and injects relevant style rules into AI prompts. It also utilizes the VS Code SCM API to securely access Git repository data and staged changes, aiming to improve developer productivity and codebase maintainability by standardizing professional commit history.
+*   A computer vision project designed to detect hygiene compliance, specifically the wearing of gloves during food preparation, using the YOLOv8 object detection framework.
+*   An Applicant Tracking System (ATS) that uses Python's multiprocessing for parallel face encoding, a modification-based caching system, and a dual-layered scoring engine merging probabilistic LLM insights with deterministic business rules. This system significantly reduces time-to-hire by providing instant, detailed AI feedback on candidates and modernizes the HR workflow with biometric security.
+*   Prompt Polish: A lightweight Chrome Extension that instantly transforms raw, generic ideas into highly optimized, engineer-grade prompts using Google's gemma-3-27b-it model.
+
+================================================
+
+
+
+================ Automated Evaluation Relevancy Results ================
+
+Score: 1.0
+
+================================================
+
+
+
+================ Manual Evaluation Relevancy ================
+
+Query: 
+What projects has Sasidhar built?
+
+
+Context: 
+Check the knowledge_base.txt file for the context used in this evaluation.
+
+
+Response: 
+Sasidhar has built the following projects:
+
+*   A tool that implements local documentation indexing, scans Markdown files, and injects relevant style rules into AI prompts. It also utilizes the VS Code SCM API to securely access Git repository data and staged changes, aiming to improve developer productivity and codebase maintainability by standardizing professional commit history.
+*   A computer vision project designed to detect hygiene compliance, specifically the wearing of gloves during food preparation, using the YOLOv8 object detection framework.
+*   An Applicant Tracking System (ATS) that uses Python's multiprocessing for parallel face encoding, a modification-based caching system, and a dual-layered scoring engine merging probabilistic LLM insights with deterministic business rules. This system significantly reduces time-to-hire by providing instant, detailed AI feedback on candidates and modernizes the HR workflow with biometric security.
+*   Prompt Polish: A lightweight Chrome Extension that instantly transforms raw, generic ideas into highly optimized, engineer-grade prompts using Google's gemma-3-27b-it model.
+
+================================================
+
+
