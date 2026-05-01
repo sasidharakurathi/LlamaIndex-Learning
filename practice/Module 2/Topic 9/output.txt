@@ -1,0 +1,47 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]
+Loading weights: 100%|##########| 199/199 [00:00<00:00, 4605.79it/s]
+
+
+================ Response of compact Mode ================
+
+
+Sasidhar has developed several projects, including a system for local documentation indexing that standardizes commit history, a computer vision project called Glove & Burger Detection for hygiene compliance, a tool that reduces time-to-hire by providing AI feedback on candidates, and a Chrome Extension named Prompt Polish that optimizes raw ideas into engineer-grade prompts.
+
+
+================================================
+
+
+
+
+================ Response of refine Mode ================
+
+
+Sasidhar has built several projects:
+
+1.  An Applicant Tracking System that utilizes parallel face encoding, a modification-based caching system, and a dual-layered scoring engine combining LLM insights with business rules to provide instant AI feedback, reduce time-to-hire, and enhance HR workflows with biometric security.
+2.  A Chrome Extension named Prompt Polish, which transforms generic ideas into optimized, engineer-grade prompts using Google's gemma-3-27b-it model.
+3.  A tool designed for local documentation indexing and standardizing professional commit history through the VS Code SCM API.
+4.  A computer vision project that detects hygiene compliance, specifically the wearing of gloves during food preparation, using the YOLOv8 object detection framework.
+
+
+================================================
+
+
+
+
+================ Response of tree_summarize Mode ================
+
+
+Sasidhar has built the following projects:
+
+*   Repo Scribe
+*   Glove & Burger Detection
+*   ATS
+*   Prompt Polish
+
+
+================================================
+
+
