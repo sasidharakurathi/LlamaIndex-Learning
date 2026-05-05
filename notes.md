@@ -1479,5 +1479,299 @@ Check completeness (Correctness)
  - Check the output in [output.txt](practice/Module%202/Topic%2010/output.txt) to see the evaluation results for both metrics. 
  - You can also compare these scores with the actual retrieved nodes and generated answer to see if they align with your manual evaluation.
 
-#### So we have come to the end of Module 2. I hope you have understood the concepts. And my notes are clear to you. 😊
-#### In the next module, we will learn about `ChromaDB` and how to integrate it with LlamaIndex for better retrieval performance. We will also learn about `Reranking` and `Query Reformulation` techniques to further improve our RAG system.
+#### So we have come to the end of Module 2. I hope you have understood the concepts. And my notes is clear to you. 😊
+#### In the next module, we shift into real-world system design.
+
+# MODULE 3 - Data Connectors & Pipelines
+## Topic 11. Data Connectors (PDFs, APIs, DBs, Notion, etc.)
+### Why Data Connectors are important?
+ - So far we have been working with simple text documents.
+ - But in real-time applications, we need to ingest data from various sources like PDFs, APIs, databases, Notion, etc.
+    ```text
+    PDFs / APIs / DB / Notion / Files → Documents → Nodes → Index
+    ```
+ - Our RAG system is only as good as our ingestion pipeline.
+
+### What are Data Connectors?
+ - Data connectors are tools that allow us to connect to different data sources and ingest that data into our LammaIndex Documents.
+
+#### Examples:
+| Source     | Connector             |
+| ---------- | --------------------- |
+| PDF        | PDFReader             |
+| Text files | SimpleDirectoryReader |
+| Web pages  | Web loaders           |
+| APIs       | Custom loaders        |
+| Databases  | SQL loaders           |
+
+### Internal Flow of Data Connectors:
+```text
+External Data → Loader → Document → NodeParser → Nodes
+```
+
+### Practical Implementation of Data Connectors
+#### 1. Local Directory Loader:
+#### Implementation:
+```python
+from llama_index.core import SimpleDirectoryReader
+
+documents = SimpleDirectoryReader(
+    input_dir="./data",
+    recursive=True
+).load_data()
+```
+
+- This reads all files in the `./data` directory and converts them into Documents automatically.
+
+#### 2. PDF Loader
+#### Implementation:
+```python
+from llama_index.readers.file import PDFReader
+
+loader = PDFReader()
+documents = loader.load_data(file="resume.pdf")
+```
+
+- This reads a PDF file and converts it into a Document.
+- PDFs are tricky because they have complex layouts
+- so using a specialized PDF reader is important to extract text correctly.
+- We'll learn about more advanced PDF parsing techniques in later modules.
+
+#### 3. Custom Loader
+- This is where our acutal engineer skills come into play.
+- We can build custom loaders to connect to APIs, databases, or any other data source.
+
+#### Example: Load from Database
+```python
+from llama_index.core import Document
+
+def load_from_db():
+    rows = [
+        {"name": "Sasidhar", "project": "ATS system"},
+        {"name": "Sasidhar", "project": "AI assistant"}
+    ]
+
+    documents = []
+
+    for row in rows:
+        text = f"{row['name']} built {row['project']}"
+        documents.append(Document(text=text))
+
+    return documents
+```
+
+#### Example: Load from API
+```python
+import requests
+from llama_index.core import Document
+
+def load_from_api():
+    data = requests.get("https://api.example.com/projects").json()
+
+    docs = []
+
+    for item in data:
+        docs.append(Document(text=item["description"]))
+
+    return docs
+```
+
+### Core Consideration:
+- **Documents are NOT just text**
+- They can include metadata.
+```
+Document(
+    text="ATS system...",
+    metadata={
+        "type": "project",
+        "source": "portfolio",
+        "year": 2025
+    }
+)
+```
+- This metadata can be used for filtering, routing and structured retrieval, which we will learn in later modules.
+
+### Here is a mini [task](practice/Module%203/Topic%2011/task.py) for you to understand data connectors better:
+1. Create a folder:
+    ```bash
+    data/
+    ├── ats.txt
+    ├── another_project.txt
+    ```
+2. Load using:
+    ```python
+    SimpleDirectoryReader
+    ```
+3. Build Index and Query:
+    ```text
+    "What projects has Sasidhar built?"
+    ```
+
+#### Observe the [task.py](practice/Module%203/Topic%2011/task.py), [data/](practice/Module%203/Topic%2011/data/) and [output.txt](practice/Module%203/Topic%2011/output.txt) to see how the data connectors work in practice. 
+
+## Topic 12. Ingestion Pipelines (Transformations, metadata enrichment)
+#### Right now we are just injecting raw text into our RAG system.
+```text
+Loader → Documents → NodeParser → Index
+```
+
+#### Basically `Raw data → bad chunks → bad embeddings → bad retrieval`
+
+So we must transform data before indexing.
+
+### What is a Ingestion Pipeline?
+- An ingestion pipeline is a series of steps that process and transform raw data into a format that can be indexed and retrieved effectively by our RAG system.
+- This is a critical step in building production-grade RAG systems because the quality of our data directly impacts the quality of our retrieval and generation.
+- Generally we do not get a perfect cleaned data from the organizations or anyother comercial data sources.
+- We need to build pipelines that can handle data cleaning, transformation, and enrichment before it gets indexed.
+
+Here is the updated flow of our RAG system with ingestion pipelines:
+```text
+Loader → Transformations → Clean Data → NodeParser → Nodes → Index
+```
+
+### Types of Transformations:
+We will focus on 3 critical transformations:
+1. Cleaning (remove noise)
+2. Metadata enrichment
+3. Custom chunking logic
+
+#### 1. Cleaning
+Right now my documents have a lot of noise (markdown syntaxt) like:
+```text
+**Github Link**
+**Demo Link**
+**Status**
+```
+**This might messup the embeddings. So, we need to clean it.**
+
+#### Implementation:
+```python
+def clean_text(text: str) -> str:
+    lines = text.split("\n")
+    
+    filtered = [
+        line for line in lines
+        if "Github Link" not in line
+        and "Demo Link" not in line
+        and line.strip() != ""
+    ]
+    
+    return "\n".join(filtered)
+```
+#### Apply cleaning in the pipeline:
+```python
+cleaned_text = clean_text(knowledge_base)
+
+documents = [Document(text=cleaned_text)]
+```
+
+#### 2. Metadata Enrichment
+- This is the game changer for building production-grade RAG systems.
+- We can metadata to our documents that can be used for filtering and structured retrieval later on.
+
+```python
+Document(
+    text="ATS system...",
+    metadata={
+        "type": "project",
+        "category": "AI",
+        "source": "portfolio"
+    }
+)
+```
+
+Later we can:
+```python
+Retrieve only "projects"
+Filter by "AI"
+Route queries
+```
+
+#### Example
+```python
+documents = [
+    Document(
+        text=knowledge_base,
+        metadata={"type": "project", "name": "ATS"}
+    )
+]
+```
+
+#### 3. Custom Transformation Pipeline
+- We can build custom transformation pipelines that include multiple steps like cleaning, enrichment etc.
+
+```python
+def build_documents(raw_text):
+    cleaned = clean_text(raw_text)
+    
+    return [
+        Document(
+            text=cleaned,
+            metadata={"type": "project"}
+        )
+    ]
+```
+
+- Now are pipeline looks like:
+```python
+documents = build_documents(knowledge_base)
+
+nodes = parser.get_nodes_from_documents(documents)
+
+index = VectorStoreIndex(nodes, embed_model=embed_model)
+```
+
+### LammaIndex provides Native Pipeline Support
+This is a basic transformations
+```python
+from llama_index.core.ingestion import IngestionPipeline
+
+pipeline = IngestionPipeline(
+    transformations=[
+        node_parser,
+    ]
+)
+
+nodes = pipeline.run(documents=documents)
+```
+
+Later we can add `cleaners`, `metadata injectors` and `embeddings`.
+
+Note:
+ - Always remember, Better preprocessing leads to better retrieval (it's better than changing LLM)
+ - Mostly, Metadata enrichment is better than Prompt Engineering. Because `filtering is easier and accurate than guessing`
+    - Here filtering can be done based on metadata
+    - And guessing is when we try to include instructions in the prompt to make the LLM understand what to do. But it is not always effective.
+
+### Here is a mini [task](practice/Module%203/Topic%2012/task.py) for us to understand ingestion pipelines better:
+1. Let's try to clean our markdown documents
+ - remove links, empty lines
+2. And then add metadata to our documents
+    ```python
+    metadata={
+        "type": "project",
+        "name": "ATS",
+        "domain": "AI"
+    }
+    ```
+3. Then build the index and query:
+    ```text
+    "What projects has Sasidhar built?"
+    ```
+4. Then let's print nodes to verfiy whether:
+ - The chunks are clean and not noisy
+ - Better relevance due to metadata enrichment
+
+#### Actually, here I am not implementing the metadata filtering. we will learn about that in later modules. But you can see how the metadata is added to the documents and how it can be used for filtering later on.
+
+#### Check the [task.py](practice/Module%203/Topic%2012/task.py) and [output.txt](practice/Module%203/Topic%2012/output.txt) to see how the ingestion pipeline works in practice.
+#### Also check the [cleaned_knowledge_base.txt](practice/Module%203/Topic%2012/cleaned_knowledge_base.txt) to see how the raw knowledge base is transformed into a clean and enriched format before indexing.
+
+#### The major cleaning logic is at line 19 in [task.py](practice/Module%203/Topic%2012/task.py#19).
+```python
+cleaned_document = document.replace("#", "").replace("*", "").strip()
+```
+Note:
+ - Cleaning logic varies based on the type of noise in your data. You can customize it as per your needs.
+ - We will cover that in later modules.

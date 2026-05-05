@@ -1,0 +1,46 @@
+### Project: RoboSwift
+**Type**: personal
+
+**Description**: A high-performance desktop GUI for the Windows robocopy engine, wrapping the command-line utility in a modern, real-time interface.
+
+**Problem Solved**: Simplifies the complex robocopy command-line interface by eliminating the need to memorize cryptic flags and manually parse terminal output.
+
+**Your Role**: Full-stack Developer (Built frontend and backend process management)
+
+**Tech Stack**:
+- Tauri 2
+- React 19
+- Rust
+- TypeScript
+- Tailwind CSS 4
+- Vite 8
+- regex crate
+**Architecture**: Desktop shell built with Tauri 2, featuring a React 19 frontend communicating via IPC (Commands & Events) with a Rust backend that manages Windows robocopy processes.
+
+**Features**:
+- Visual flag selection (e.g., /MIR, /MT:16, /Z) with tooltips
+- Live telemetry HUD for throughput and file count progress
+- Real-time log stream parsed from robocopy stdout
+- Live generated command preview
+- PID-level process cancellation
+- Custom 'Kinetic Void' dark design system
+**Challenges**:
+- Parsing raw stdout from robocopy in real-time
+- Managing thread-safe state for process control
+- Handling network interruptions in transfer modes
+**Solutions**:
+- Implemented regex-based parsing in Rust to extract progress and speed from stdout
+- Used Mutex in the Rust backend for thread-safe state management
+- Integrated robocopy's restartable mode (/Z) for resume capabilities
+**Impact**: Provides a user-friendly, efficient tool for high-performance file synchronization and migration on Windows.
+
+**Github Link**: https://github.com/sasidharakurathi/RoboSwift
+
+**Demo Link**: 
+
+**Status**: ongoing
+
+**Future Improvements**:
+- Add screenshots to documentation
+- Implement more advanced robocopy flags
+- Expand logging and reporting capabilities
