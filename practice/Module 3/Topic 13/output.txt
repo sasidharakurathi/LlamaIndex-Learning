@@ -1,0 +1,282 @@
+Removing Exsiting Persistence Directory...
+
+Primary Knowledge Base Nodes:
+===================================================================
+
+
+--- Node ID: 1aee6446-f79b-4cbb-9e3b-3e37875d4d7a: ---
+
+### Project: ATS (Application Tracking System)
+**Type**: personal / research
+
+**Description**: A comprehensive Django-based Application Tracking System featuring an AI-assisted resume analysis pipeline and biometric face-recognition authentication.
+
+**Problem Solved**: Automates the tedious process of resume screening and candidate evaluation using LLMs, while providing a secure and modern authentication method through face recognition.
+
+**Your Role**: Lead Developer
+
+**Tech Stack**:
+- Python
+- Django
+- Google Gemini (Generative AI)
+- Ollama (Local LLM Support)
+- Face Recognition (dlib/OpenCV)
+- PyPDF2
+- python-docx
+- MySQL
+- Channels (WebSockets)
+- Tailwind CSS
+**Architecture**: A monolithic Django architecture with specialized modular sub-systems: a ResumeParser (PDF/Docx extraction + LLM Orchestration), a FaceRecognition module (biometric login), and an integrated Scoring Engine for deterministic candidate ranking.
+
+**Features**:
+- LLM-Powered Resume Analysis: Context-aware parsing using Gemini or Ollama.
+- Biometric Face Login: Secure authentication using real-time face recognition.
+- Rule-Based Scoring Engine: Combines LLM outputs with deterministic weights and keyword matching.
+- Batch Resume Processing: Asynchronous-ready processing for multiple candidate uploads.
+- Job Management Portal: Create and manage job descriptions with automated folder structure.
+- Interview Management: Automated email invitations and interview report tracking.
+- Real-time Face Encoding: Admin tools to capture and cache biometric data with multiprocessing support.
+- Candidate Dashboard: Visual tracking of application status and AI-generated scores.
+**Challenges**:
+- Handling LLM hallucinations and ensuring structured JSON outputs for reliable database persistence.
+- Optimizing high-latency biometric operations (face encoding) to prevent blocking the web thread.
+- Managing large-scale resume parsing while maintaining high accuracy across various file formats (PDF/DOCX).
+**Solutions**:
+- Implemented a robust client wrapper with retry logic and fallbacks for LLM JSON parsing.
+- Used Python's multiprocessing for parallel face encoding and implemented a modification-based caching system.
+- Integrated a dual-layered scoring engine that merges probabilistic LLM insights with deterministic business rules.
+**Impact**: Significantly reduces time-to-hire by providing instant, detailed AI feedback on candidates and modernizes the HR workflow with biometric security.
+
+**Github Link**: https://github.com/sasidharakurathi/ATS
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Migrate raw SQL interview tables to Django ORM models for better scalability.
+- Integrate a task queue like Celery for true background batch processing.
+
+--- Node ID: 2d343a13-da45-4076-963a-4c0baa672d64: ---
+
+- Expand reporting with automated CSV/XLSX exports using pandas.
+
+
+===================================================================
+
+
+Querying the primary knowledge base...
+
+Response to query:
+
+Sasidhar has built the ATS (Application Tracking System) project.
+===================================================================
+
+
+Updated Knowledge Base Nodes:
+===================================================================
+
+
+--- Node ID: 1aee6446-f79b-4cbb-9e3b-3e37875d4d7a: ---
+
+### Project: ATS (Application Tracking System)
+**Type**: personal / research
+
+**Description**: A comprehensive Django-based Application Tracking System featuring an AI-assisted resume analysis pipeline and biometric face-recognition authentication.
+
+**Problem Solved**: Automates the tedious process of resume screening and candidate evaluation using LLMs, while providing a secure and modern authentication method through face recognition.
+
+**Your Role**: Lead Developer
+
+**Tech Stack**:
+- Python
+- Django
+- Google Gemini (Generative AI)
+- Ollama (Local LLM Support)
+- Face Recognition (dlib/OpenCV)
+- PyPDF2
+- python-docx
+- MySQL
+- Channels (WebSockets)
+- Tailwind CSS
+**Architecture**: A monolithic Django architecture with specialized modular sub-systems: a ResumeParser (PDF/Docx extraction + LLM Orchestration), a FaceRecognition module (biometric login), and an integrated Scoring Engine for deterministic candidate ranking.
+
+**Features**:
+- LLM-Powered Resume Analysis: Context-aware parsing using Gemini or Ollama.
+- Biometric Face Login: Secure authentication using real-time face recognition.
+- Rule-Based Scoring Engine: Combines LLM outputs with deterministic weights and keyword matching.
+- Batch Resume Processing: Asynchronous-ready processing for multiple candidate uploads.
+- Job Management Portal: Create and manage job descriptions with automated folder structure.
+- Interview Management: Automated email invitations and interview report tracking.
+- Real-time Face Encoding: Admin tools to capture and cache biometric data with multiprocessing support.
+- Candidate Dashboard: Visual tracking of application status and AI-generated scores.
+**Challenges**:
+- Handling LLM hallucinations and ensuring structured JSON outputs for reliable database persistence.
+- Optimizing high-latency biometric operations (face encoding) to prevent blocking the web thread.
+- Managing large-scale resume parsing while maintaining high accuracy across various file formats (PDF/DOCX).
+**Solutions**:
+- Implemented a robust client wrapper with retry logic and fallbacks for LLM JSON parsing.
+- Used Python's multiprocessing for parallel face encoding and implemented a modification-based caching system.
+- Integrated a dual-layered scoring engine that merges probabilistic LLM insights with deterministic business rules.
+**Impact**: Significantly reduces time-to-hire by providing instant, detailed AI feedback on candidates and modernizes the HR workflow with biometric security.
+
+**Github Link**: https://github.com/sasidharakurathi/ATS
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Migrate raw SQL interview tables to Django ORM models for better scalability.
+- Integrate a task queue like Celery for true background batch processing.
+
+--- Node ID: 2d343a13-da45-4076-963a-4c0baa672d64: ---
+
+- Expand reporting with automated CSV/XLSX exports using pandas.
+--- Node ID: a82c7b5b-1f7b-4731-85b8-4a6561090d63: ---
+
+### Project: Axon-File-Manager
+**Type**: personal / research
+
+**Description**: A sophisticated desktop file manager that implements a 'Neural Search' engine, combining traditional search with semantic vector search, query expansion, and AI-driven re-ranking.
+
+**Problem Solved**: Solves the limitations of traditional keyword-based file search (which fails on synonyms or conceptual queries) by providing a multi-stage search pipeline that understands the context and meaning of file contents.
+
+**Your Role**: Full-stack Developer
+
+**Tech Stack**:
+- Python
+- Flet (Flutter for Python)
+- Qdrant (Vector Database)
+- SQLAlchemy / SQLite
+- BAAI/bge-base (Embedding Model)
+- KeyBERT
+- HyDE (Hypothetical Document Embeddings)
+- BM25
+- PyInstaller
+- Asyncio
+**Architecture**: A multi-stage AI pipeline architecture. It uses a Flet-based frontend for the desktop UI and a complex backend featuring: 1. 
+--- Node ID: 11dfb5df-3be2-49b2-8ac4-983786a11bab: ---
+
+Dual Retrieval (BM25 + Dense Vector Search), 2. 
+--- Node ID: b7a012d1-8852-448d-af90-9859cc39c842: ---
+
+RRF (Reciprocal Rank Fusion), 3. Re-ranking (Cross-Encoders), and 4. HyDE for query expansion.
+
+**Features**:
+- Semantic Search: Find files by meaning, not just filenames or exact keywords.
+- HyDE Query Expansion: Generates hypothetical answers to queries to improve vector search accuracy.
+- Hybrid Search: Combines BM25 (keyword) and Vector (semantic) results using RRF fusion.
+- Real-time File Watching: Automatically indexes new or modified files using a background watcher.
+- AI Re-ranking: Uses a re-ranker model to ensure the most relevant files appear first.
+- Keyword Extraction: Automatically extracts key concepts from files using KeyBERT.
+- Integrated Splash Screen: Handles heavy model loading (embeddings, re-rankers) on startup with progress tracking.
+- Cross-platform Desktop Support: Bundled for Windows/macOS/Linux via PyInstaller.
+**Challenges**:
+- Managing the heavy resource overhead of loading multiple AI models (Embedder, Re-ranker, KeyBERT) in a desktop app.
+- Ensuring the UI remains responsive during long-running background file indexing and multi-stage search operations.
+- Synchronizing local database metadata with a vector store (Qdrant) in real-time.
+**Solutions**:
+- Implemented a splash screen that initializes models in separate threads using `asyncio.to_thread` to prevent UI blocking.
+- Developed a multi-stage search pipeline that narrows down candidates before applying the computationally expensive re-ranking stage.
+- Used a robust background worker and file watcher system to handle asynchronous updates to the search index.
+**Impact**: Provides a 'pro-level' search experience on local machines, bridging the gap between cloud-based search capabilities and local file management.
+
+**Github Link**: https://github.com/sasidharakurathi/Axon-File-Manager
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Support for more complex file formats (OCR for PDFs/Images).
+- Optimization of model sizes for lower-end hardware.
+- Integration of LLM-based 'Chat with your files' functionality.
+
+
+===================================================================
+
+
+Querying the updated knowledge base (after adding new_knowledge_base.txt) ...
+
+Response to query:
+
+Sasidhar has built the ATS (Application Tracking System) and Axon-File-Manager projects.
+===================================================================
+
+
+Deleing primary knowledge base nodes...
+
+Knowledge Base Nodes after deletion:
+===================================================================
+
+
+--- Node ID: a82c7b5b-1f7b-4731-85b8-4a6561090d63: ---
+
+### Project: Axon-File-Manager
+**Type**: personal / research
+
+**Description**: A sophisticated desktop file manager that implements a 'Neural Search' engine, combining traditional search with semantic vector search, query expansion, and AI-driven re-ranking.
+
+**Problem Solved**: Solves the limitations of traditional keyword-based file search (which fails on synonyms or conceptual queries) by providing a multi-stage search pipeline that understands the context and meaning of file contents.
+
+**Your Role**: Full-stack Developer
+
+**Tech Stack**:
+- Python
+- Flet (Flutter for Python)
+- Qdrant (Vector Database)
+- SQLAlchemy / SQLite
+- BAAI/bge-base (Embedding Model)
+- KeyBERT
+- HyDE (Hypothetical Document Embeddings)
+- BM25
+- PyInstaller
+- Asyncio
+**Architecture**: A multi-stage AI pipeline architecture. It uses a Flet-based frontend for the desktop UI and a complex backend featuring: 1. 
+--- Node ID: 11dfb5df-3be2-49b2-8ac4-983786a11bab: ---
+
+Dual Retrieval (BM25 + Dense Vector Search), 2. 
+--- Node ID: b7a012d1-8852-448d-af90-9859cc39c842: ---
+
+RRF (Reciprocal Rank Fusion), 3. Re-ranking (Cross-Encoders), and 4. HyDE for query expansion.
+
+**Features**:
+- Semantic Search: Find files by meaning, not just filenames or exact keywords.
+- HyDE Query Expansion: Generates hypothetical answers to queries to improve vector search accuracy.
+- Hybrid Search: Combines BM25 (keyword) and Vector (semantic) results using RRF fusion.
+- Real-time File Watching: Automatically indexes new or modified files using a background watcher.
+- AI Re-ranking: Uses a re-ranker model to ensure the most relevant files appear first.
+- Keyword Extraction: Automatically extracts key concepts from files using KeyBERT.
+- Integrated Splash Screen: Handles heavy model loading (embeddings, re-rankers) on startup with progress tracking.
+- Cross-platform Desktop Support: Bundled for Windows/macOS/Linux via PyInstaller.
+**Challenges**:
+- Managing the heavy resource overhead of loading multiple AI models (Embedder, Re-ranker, KeyBERT) in a desktop app.
+- Ensuring the UI remains responsive during long-running background file indexing and multi-stage search operations.
+- Synchronizing local database metadata with a vector store (Qdrant) in real-time.
+**Solutions**:
+- Implemented a splash screen that initializes models in separate threads using `asyncio.to_thread` to prevent UI blocking.
+- Developed a multi-stage search pipeline that narrows down candidates before applying the computationally expensive re-ranking stage.
+- Used a robust background worker and file watcher system to handle asynchronous updates to the search index.
+**Impact**: Provides a 'pro-level' search experience on local machines, bridging the gap between cloud-based search capabilities and local file management.
+
+**Github Link**: https://github.com/sasidharakurathi/Axon-File-Manager
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Support for more complex file formats (OCR for PDFs/Images).
+- Optimization of model sizes for lower-end hardware.
+- Integration of LLM-based 'Chat with your files' functionality.
+
+
+===================================================================
+
+
+Querying the updated knowledge base (after deleting primary_knowledge_base.txt) ...
+
+Response to query:
+
+Sasidhar has built the Axon-File-Manager project.

@@ -1,0 +1,62 @@
+### Experience: InfoSpoke Integrated Solutions LLP (Project Intern)
+**Duration**: During B.Tech (2022 - 2026)
+
+**Work Done**:
+- Backend development for scalable software systems
+- Performance optimization of existing services
+- Designed and implemented scalable software architecture
+**Technologies Used**:
+- Python
+- FastAPI
+- Django
+- PostgreSQL
+- REST APIs
+**Key Learnings**:
+- Scalable backend architecture patterns
+- Performance profiling and optimization techniques
+- Building production-grade API services
+**Achievements**:
+- Contributed to backend systems with a focus on performance and scalability
+
+### Experience: Swecha AP (DevOps Intern)
+**Duration**: During B.Tech (2022–2026)
+
+**Work Done**:
+- Set up and maintained CI/CD pipelines
+- Containerized applications using Docker
+- Worked on EdTech platform infrastructure
+- Automated workflows for development and deployment
+**Technologies Used**:
+- Docker
+- GitHub Actions
+- AWS
+- Nginx
+- Bash
+- Linux
+**Key Learnings**:
+- CI/CD pipeline design and automation
+- Docker containerization and multi-container orchestration
+- Workflow automation for EdTech platforms
+**Achievements**:
+- Automated deployment workflows reducing manual intervention
+- Containerized EdTech platform services using Docker
+
+### Experience: Supraja Technologies (Cybersecurity Intern)
+**Duration**: During B.Tech (2022–2026)
+
+**Work Done**:
+- Conducted vulnerability assessments on target systems
+- Performed penetration testing to identify security weaknesses
+- Documented findings and recommended remediation strategies
+**Technologies Used**:
+- Penetration Testing Tools
+- Vulnerability Assessment Frameworks
+- Linux
+- Network Security Tools
+**Key Learnings**:
+- Zero-Trust security principles
+- Vulnerability assessment methodologies
+- Penetration testing techniques and reporting
+**Achievements**:
+- Successfully identified and reported vulnerabilities across assessed systems
+- Built foundational knowledge in cybersecurity applied to backend security practices

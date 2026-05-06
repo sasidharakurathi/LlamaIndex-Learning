@@ -1,0 +1,410 @@
+===================================================================
+All Knowledge Base Nodes:
+===================================================================
+--- Node ID: db258289-90dd-4948-9a7d-9644784a1b01: ---
+
+### Project: ATS (Application Tracking System)
+**Type**: personal / research
+
+**Description**: A comprehensive Django-based Application Tracking System featuring an AI-assisted resume analysis pipeline and biometric face-recognition authentication.
+
+**Problem Solved**: Automates the tedious process of resume screening and candidate evaluation using LLMs, while providing a secure and modern authentication method through face recognition.
+
+**Your Role**: Lead Developer
+
+**Tech Stack**:
+- Python
+- Django
+- Google Gemini (Generative AI)
+- Ollama (Local LLM Support)
+- Face Recognition (dlib/OpenCV)
+- PyPDF2
+- python-docx
+- MySQL
+- Channels (WebSockets)
+- Tailwind CSS
+**Architecture**: A monolithic Django architecture with specialized modular sub-systems: a ResumeParser (PDF/Docx extraction + LLM Orchestration), a FaceRecognition module (biometric login), and an integrated Scoring Engine for deterministic candidate ranking.
+
+**Features**:
+- LLM-Powered Resume Analysis: Context-aware parsing using Gemini or Ollama.
+- Biometric Face Login: Secure authentication using real-time face recognition.
+- Rule-Based Scoring Engine: Combines LLM outputs with deterministic weights and keyword matching.
+- Batch Resume Processing: Asynchronous-ready processing for multiple candidate uploads.
+- Job Management Portal: Create and manage job descriptions with automated folder structure.
+- Interview Management: Automated email invitations and interview report tracking.
+- Real-time Face Encoding: Admin tools to capture and cache biometric data with multiprocessing support.
+- Candidate Dashboard: Visual tracking of application status and AI-generated scores.
+**Challenges**:
+- Handling LLM hallucinations and ensuring structured JSON outputs for reliable database persistence.
+- Optimizing high-latency biometric operations (face encoding) to prevent blocking the web thread.
+- Managing large-scale resume parsing while maintaining high accuracy across various file formats (PDF/DOCX).
+**Solutions**:
+- Implemented a robust client wrapper with retry logic and fallbacks for LLM JSON parsing.
+- Used Python's multiprocessing for parallel face encoding and implemented a modification-based caching system.
+- Integrated a dual-layered scoring engine that merges probabilistic LLM insights with deterministic business rules.
+**Impact**: Significantly reduces time-to-hire by providing instant, detailed AI feedback on candidates and modernizes the HR workflow with biometric security.
+
+**Github Link**: https://github.com/sasidharakurathi/ATS
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Migrate raw SQL interview tables to Django ORM models for better scalability.
+- Integrate a task queue like Celery for true background batch processing.
+- Expand reporting with automated CSV/XLSX exports using pandas.
+
+### Project: Axon-File-Manager
+**Type**: personal / research
+
+**Description**: A sophisticated desktop file manager that implements a 'Neural Search' engine, combining traditional search with semantic vector search, query expansion, and AI-driven re-ranking.
+
+**Problem Solved**: Solves the limitations of traditional keyword-based file search (which fails on synonyms or conceptual queries) by providing a multi-stage search pipeline that understands the context and meaning of file contents.
+
+**Your Role**: Full-stack Developer
+
+**Tech Stack**:
+- Python
+- Flet (Flutter for Python)
+- Qdrant (Vector Database)
+- SQLAlchemy / SQLite
+- BAAI/bge-base (Embedding Model)
+- KeyBERT
+- HyDE (Hypothetical Document Embeddings)
+- BM25
+- PyInstaller
+- Asyncio
+**Architecture**: A multi-stage AI pipeline architecture. It uses a Flet-based frontend for the desktop UI and a complex backend featuring: 1. Dual Retrieval (BM25 + Dense Vector Search), 2. RRF (Reciprocal Rank Fusion), 3. Re-ranking (Cross-Encoders), and 4. HyDE for query expansion.
+
+**Features**:
+- Semantic Search: Find files by meaning, not just filenames or exact keywords.
+- HyDE Query Expansion: Generates hypothetical answers to queries to improve vector search accuracy.
+- Hybrid Search: Combines BM25 (keyword) and Vector (semantic) results using RRF fusion.
+- Real-time File Watching: Automatically indexes new or modified files using a background watcher.
+- AI Re-ranking: Uses a re-ranker model to ensure the most relevant files appear first.
+- Keyword Extraction: Automatically extracts key concepts from files using KeyBERT.
+- Integrated Splash Screen: Handles heavy model loading (embeddings, re-rankers) on startup with progress tracking.
+- Cross-platform Desktop Support: Bundled for Windows/macOS/Linux via PyInstaller.
+**Challenges**:
+- Managing the heavy resource overhead of loading multiple AI models (Embedder, Re-ranker, KeyBERT) in a desktop app.
+- Ensuring the UI remains responsive during long-running background file indexing and multi-stage search operations.
+--- Node ID: d57b55e3-542b-4660-99e6-17a6038e2e48: ---
+
+- HyDE Query Expansion: Generates hypothetical answers to queries to improve vector search accuracy.
+- Hybrid Search: Combines BM25 (keyword) and Vector (semantic) results using RRF fusion.
+- Real-time File Watching: Automatically indexes new or modified files using a background watcher.
+- AI Re-ranking: Uses a re-ranker model to ensure the most relevant files appear first.
+- Keyword Extraction: Automatically extracts key concepts from files using KeyBERT.
+- Integrated Splash Screen: Handles heavy model loading (embeddings, re-rankers) on startup with progress tracking.
+- Cross-platform Desktop Support: Bundled for Windows/macOS/Linux via PyInstaller.
+**Challenges**:
+- Managing the heavy resource overhead of loading multiple AI models (Embedder, Re-ranker, KeyBERT) in a desktop app.
+- Ensuring the UI remains responsive during long-running background file indexing and multi-stage search operations.
+- Synchronizing local database metadata with a vector store (Qdrant) in real-time.
+**Solutions**:
+- Implemented a splash screen that initializes models in separate threads using `asyncio.to_thread` to prevent UI blocking.
+- Developed a multi-stage search pipeline that narrows down candidates before applying the computationally expensive re-ranking stage.
+- Used a robust background worker and file watcher system to handle asynchronous updates to the search index.
+**Impact**: Provides a 'pro-level' search experience on local machines, bridging the gap between cloud-based search capabilities and local file management.
+
+**Github Link**: https://github.com/sasidharakurathi/Axon-File-Manager
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Support for more complex file formats (OCR for PDFs/Images).
+- Optimization of model sizes for lower-end hardware.
+- Integration of LLM-based 'Chat with your files' functionality.
+--- Node ID: 9bc14c52-1ab0-4591-a71a-429cf04d06f3: ---
+
+### Experience: InfoSpoke Integrated Solutions LLP (Project Intern)
+**Duration**: During B.Tech (2022 - 2026)
+
+**Work Done**:
+- Backend development for scalable software systems
+- Performance optimization of existing services
+- Designed and implemented scalable software architecture
+**Technologies Used**:
+- Python
+- FastAPI
+- Django
+- PostgreSQL
+- REST APIs
+**Key Learnings**:
+- Scalable backend architecture patterns
+- Performance profiling and optimization techniques
+- Building production-grade API services
+**Achievements**:
+- Contributed to backend systems with a focus on performance and scalability
+
+### Experience: Swecha AP (DevOps Intern)
+**Duration**: During B.Tech (2022–2026)
+
+**Work Done**:
+- Set up and maintained CI/CD pipelines
+- Containerized applications using Docker
+- Worked on EdTech platform infrastructure
+- Automated workflows for development and deployment
+**Technologies Used**:
+- Docker
+- GitHub Actions
+- AWS
+- Nginx
+- Bash
+- Linux
+**Key Learnings**:
+- CI/CD pipeline design and automation
+- Docker containerization and multi-container orchestration
+- Workflow automation for EdTech platforms
+**Achievements**:
+- Automated deployment workflows reducing manual intervention
+- Containerized EdTech platform services using Docker
+
+### Experience: Supraja Technologies (Cybersecurity Intern)
+**Duration**: During B.Tech (2022–2026)
+
+**Work Done**:
+- Conducted vulnerability assessments on target systems
+- Performed penetration testing to identify security weaknesses
+- Documented findings and recommended remediation strategies
+**Technologies Used**:
+- Penetration Testing Tools
+- Vulnerability Assessment Frameworks
+- Linux
+- Network Security Tools
+**Key Learnings**:
+- Zero-Trust security principles
+- Vulnerability assessment methodologies
+- Penetration testing techniques and reporting
+**Achievements**:
+- Successfully identified and reported vulnerabilities across assessed systems
+- Built foundational knowledge in cybersecurity applied to backend security practices
+
+
+===================================================================
+Querying the knowledge base without any filters...
+===================================================================
+Response to query:
+
+Sasidhar has built the following projects:
+*   ATS (Application Tracking System)
+*   Axon-File-Manager
+
+
+===================================================================
+Retrieving Nodes with project filters...
+===================================================================
+--- Node ID: db258289-90dd-4948-9a7d-9644784a1b01: ---
+
+### Project: ATS (Application Tracking System)
+**Type**: personal / research
+
+**Description**: A comprehensive Django-based Application Tracking System featuring an AI-assisted resume analysis pipeline and biometric face-recognition authentication.
+
+**Problem Solved**: Automates the tedious process of resume screening and candidate evaluation using LLMs, while providing a secure and modern authentication method through face recognition.
+
+**Your Role**: Lead Developer
+
+**Tech Stack**:
+- Python
+- Django
+- Google Gemini (Generative AI)
+- Ollama (Local LLM Support)
+- Face Recognition (dlib/OpenCV)
+- PyPDF2
+- python-docx
+- MySQL
+- Channels (WebSockets)
+- Tailwind CSS
+**Architecture**: A monolithic Django architecture with specialized modular sub-systems: a ResumeParser (PDF/Docx extraction + LLM Orchestration), a FaceRecognition module (biometric login), and an integrated Scoring Engine for deterministic candidate ranking.
+
+**Features**:
+- LLM-Powered Resume Analysis: Context-aware parsing using Gemini or Ollama.
+- Biometric Face Login: Secure authentication using real-time face recognition.
+- Rule-Based Scoring Engine: Combines LLM outputs with deterministic weights and keyword matching.
+- Batch Resume Processing: Asynchronous-ready processing for multiple candidate uploads.
+- Job Management Portal: Create and manage job descriptions with automated folder structure.
+- Interview Management: Automated email invitations and interview report tracking.
+- Real-time Face Encoding: Admin tools to capture and cache biometric data with multiprocessing support.
+- Candidate Dashboard: Visual tracking of application status and AI-generated scores.
+**Challenges**:
+- Handling LLM hallucinations and ensuring structured JSON outputs for reliable database persistence.
+- Optimizing high-latency biometric operations (face encoding) to prevent blocking the web thread.
+- Managing large-scale resume parsing while maintaining high accuracy across various file formats (PDF/DOCX).
+**Solutions**:
+- Implemented a robust client wrapper with retry logic and fallbacks for LLM JSON parsing.
+- Used Python's multiprocessing for parallel face encoding and implemented a modification-based caching system.
+- Integrated a dual-layered scoring engine that merges probabilistic LLM insights with deterministic business rules.
+**Impact**: Significantly reduces time-to-hire by providing instant, detailed AI feedback on candidates and modernizes the HR workflow with biometric security.
+
+**Github Link**: https://github.com/sasidharakurathi/ATS
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Migrate raw SQL interview tables to Django ORM models for better scalability.
+- Integrate a task queue like Celery for true background batch processing.
+- Expand reporting with automated CSV/XLSX exports using pandas.
+
+### Project: Axon-File-Manager
+**Type**: personal / research
+
+**Description**: A sophisticated desktop file manager that implements a 'Neural Search' engine, combining traditional search with semantic vector search, query expansion, and AI-driven re-ranking.
+
+**Problem Solved**: Solves the limitations of traditional keyword-based file search (which fails on synonyms or conceptual queries) by providing a multi-stage search pipeline that understands the context and meaning of file contents.
+
+**Your Role**: Full-stack Developer
+
+**Tech Stack**:
+- Python
+- Flet (Flutter for Python)
+- Qdrant (Vector Database)
+- SQLAlchemy / SQLite
+- BAAI/bge-base (Embedding Model)
+- KeyBERT
+- HyDE (Hypothetical Document Embeddings)
+- BM25
+- PyInstaller
+- Asyncio
+**Architecture**: A multi-stage AI pipeline architecture. It uses a Flet-based frontend for the desktop UI and a complex backend featuring: 1. Dual Retrieval (BM25 + Dense Vector Search), 2. RRF (Reciprocal Rank Fusion), 3. Re-ranking (Cross-Encoders), and 4. HyDE for query expansion.
+
+**Features**:
+- Semantic Search: Find files by meaning, not just filenames or exact keywords.
+- HyDE Query Expansion: Generates hypothetical answers to queries to improve vector search accuracy.
+- Hybrid Search: Combines BM25 (keyword) and Vector (semantic) results using RRF fusion.
+- Real-time File Watching: Automatically indexes new or modified files using a background watcher.
+- AI Re-ranking: Uses a re-ranker model to ensure the most relevant files appear first.
+- Keyword Extraction: Automatically extracts key concepts from files using KeyBERT.
+- Integrated Splash Screen: Handles heavy model loading (embeddings, re-rankers) on startup with progress tracking.
+- Cross-platform Desktop Support: Bundled for Windows/macOS/Linux via PyInstaller.
+**Challenges**:
+- Managing the heavy resource overhead of loading multiple AI models (Embedder, Re-ranker, KeyBERT) in a desktop app.
+- Ensuring the UI remains responsive during long-running background file indexing and multi-stage search operations.
+--- Node ID: d57b55e3-542b-4660-99e6-17a6038e2e48: ---
+
+- HyDE Query Expansion: Generates hypothetical answers to queries to improve vector search accuracy.
+- Hybrid Search: Combines BM25 (keyword) and Vector (semantic) results using RRF fusion.
+- Real-time File Watching: Automatically indexes new or modified files using a background watcher.
+- AI Re-ranking: Uses a re-ranker model to ensure the most relevant files appear first.
+- Keyword Extraction: Automatically extracts key concepts from files using KeyBERT.
+- Integrated Splash Screen: Handles heavy model loading (embeddings, re-rankers) on startup with progress tracking.
+- Cross-platform Desktop Support: Bundled for Windows/macOS/Linux via PyInstaller.
+**Challenges**:
+- Managing the heavy resource overhead of loading multiple AI models (Embedder, Re-ranker, KeyBERT) in a desktop app.
+- Ensuring the UI remains responsive during long-running background file indexing and multi-stage search operations.
+- Synchronizing local database metadata with a vector store (Qdrant) in real-time.
+**Solutions**:
+- Implemented a splash screen that initializes models in separate threads using `asyncio.to_thread` to prevent UI blocking.
+- Developed a multi-stage search pipeline that narrows down candidates before applying the computationally expensive re-ranking stage.
+- Used a robust background worker and file watcher system to handle asynchronous updates to the search index.
+**Impact**: Provides a 'pro-level' search experience on local machines, bridging the gap between cloud-based search capabilities and local file management.
+
+**Github Link**: https://github.com/sasidharakurathi/Axon-File-Manager
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Support for more complex file formats (OCR for PDFs/Images).
+- Optimization of model sizes for lower-end hardware.
+- Integration of LLM-based 'Chat with your files' functionality.
+
+
+===================================================================
+Querying the knowledge base with project filters...
+===================================================================
+Response to query:
+
+Sasidhar has built the ATS (Application Tracking System) and Axon-File-Manager projects.
+
+
+===================================================================
+Retrieving Nodes with experience filters...
+===================================================================
+--- Node ID: 9bc14c52-1ab0-4591-a71a-429cf04d06f3: ---
+
+### Experience: InfoSpoke Integrated Solutions LLP (Project Intern)
+**Duration**: During B.Tech (2022 - 2026)
+
+**Work Done**:
+- Backend development for scalable software systems
+- Performance optimization of existing services
+- Designed and implemented scalable software architecture
+**Technologies Used**:
+- Python
+- FastAPI
+- Django
+- PostgreSQL
+- REST APIs
+**Key Learnings**:
+- Scalable backend architecture patterns
+- Performance profiling and optimization techniques
+- Building production-grade API services
+**Achievements**:
+- Contributed to backend systems with a focus on performance and scalability
+
+### Experience: Swecha AP (DevOps Intern)
+**Duration**: During B.Tech (2022–2026)
+
+**Work Done**:
+- Set up and maintained CI/CD pipelines
+- Containerized applications using Docker
+- Worked on EdTech platform infrastructure
+- Automated workflows for development and deployment
+**Technologies Used**:
+- Docker
+- GitHub Actions
+- AWS
+- Nginx
+- Bash
+- Linux
+**Key Learnings**:
+- CI/CD pipeline design and automation
+- Docker containerization and multi-container orchestration
+- Workflow automation for EdTech platforms
+**Achievements**:
+- Automated deployment workflows reducing manual intervention
+- Containerized EdTech platform services using Docker
+
+### Experience: Supraja Technologies (Cybersecurity Intern)
+**Duration**: During B.Tech (2022–2026)
+
+**Work Done**:
+- Conducted vulnerability assessments on target systems
+- Performed penetration testing to identify security weaknesses
+- Documented findings and recommended remediation strategies
+**Technologies Used**:
+- Penetration Testing Tools
+- Vulnerability Assessment Frameworks
+- Linux
+- Network Security Tools
+**Key Learnings**:
+- Zero-Trust security principles
+- Vulnerability assessment methodologies
+- Penetration testing techniques and reporting
+**Achievements**:
+- Successfully identified and reported vulnerabilities across assessed systems
+- Built foundational knowledge in cybersecurity applied to backend security practices
+
+
+===================================================================
+Querying the knowledge base with experience filters...
+===================================================================
+Response to query:
+
+Sasidhar has experience as a Project Intern at InfoSpoke Integrated Solutions LLP, a DevOps Intern at Swecha AP, and a Cybersecurity Intern at Supraja Technologies, all during their B.Tech studies (2022-2026).
+
+As a Project Intern at InfoSpoke Integrated Solutions LLP, they focused on backend development for scalable software systems, performance optimization, and designing scalable software architecture. They utilized Python, FastAPI, Django, PostgreSQL, and REST APIs, learning about scalable backend architecture patterns, performance profiling, and building production-grade API services. A key achievement was contributing to backend systems with a focus on performance and scalability.
+
+As a DevOps Intern at Swecha AP, responsibilities included setting up and maintaining CI/CD pipelines, containerizing applications with Docker, working on EdTech platform infrastructure, and automating development and deployment workflows. Technologies used included Docker, GitHub Actions, AWS, Nginx, Bash, and Linux. They gained knowledge in CI/CD pipeline design, Docker containerization, and workflow automation for EdTech platforms. Achievements included automating deployment workflows to reduce manual intervention and containerizing EdTech platform services.
+
+As a Cybersecurity Intern at Supraja Technologies, they conducted vulnerability assessments, performed penetration testing to identify security weaknesses, and documented findings with remediation strategies. They used penetration testing tools, vulnerability assessment frameworks, Linux, and network security tools. Key learnings included Zero-Trust security principles, vulnerability assessment methodologies, and penetration testing techniques. Achievements included successfully identifying and reporting vulnerabilities and building foundational knowledge in cybersecurity applied to backend security practices.
+
+
+===================================================================

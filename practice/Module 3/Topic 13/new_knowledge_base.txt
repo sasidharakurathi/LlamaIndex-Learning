@@ -1,0 +1,51 @@
+### Project: Axon-File-Manager
+**Type**: personal / research
+
+**Description**: A sophisticated desktop file manager that implements a 'Neural Search' engine, combining traditional search with semantic vector search, query expansion, and AI-driven re-ranking.
+
+**Problem Solved**: Solves the limitations of traditional keyword-based file search (which fails on synonyms or conceptual queries) by providing a multi-stage search pipeline that understands the context and meaning of file contents.
+
+**Your Role**: Full-stack Developer
+
+**Tech Stack**:
+- Python
+- Flet (Flutter for Python)
+- Qdrant (Vector Database)
+- SQLAlchemy / SQLite
+- BAAI/bge-base (Embedding Model)
+- KeyBERT
+- HyDE (Hypothetical Document Embeddings)
+- BM25
+- PyInstaller
+- Asyncio
+**Architecture**: A multi-stage AI pipeline architecture. It uses a Flet-based frontend for the desktop UI and a complex backend featuring: 1. Dual Retrieval (BM25 + Dense Vector Search), 2. RRF (Reciprocal Rank Fusion), 3. Re-ranking (Cross-Encoders), and 4. HyDE for query expansion.
+
+**Features**:
+- Semantic Search: Find files by meaning, not just filenames or exact keywords.
+- HyDE Query Expansion: Generates hypothetical answers to queries to improve vector search accuracy.
+- Hybrid Search: Combines BM25 (keyword) and Vector (semantic) results using RRF fusion.
+- Real-time File Watching: Automatically indexes new or modified files using a background watcher.
+- AI Re-ranking: Uses a re-ranker model to ensure the most relevant files appear first.
+- Keyword Extraction: Automatically extracts key concepts from files using KeyBERT.
+- Integrated Splash Screen: Handles heavy model loading (embeddings, re-rankers) on startup with progress tracking.
+- Cross-platform Desktop Support: Bundled for Windows/macOS/Linux via PyInstaller.
+**Challenges**:
+- Managing the heavy resource overhead of loading multiple AI models (Embedder, Re-ranker, KeyBERT) in a desktop app.
+- Ensuring the UI remains responsive during long-running background file indexing and multi-stage search operations.
+- Synchronizing local database metadata with a vector store (Qdrant) in real-time.
+**Solutions**:
+- Implemented a splash screen that initializes models in separate threads using `asyncio.to_thread` to prevent UI blocking.
+- Developed a multi-stage search pipeline that narrows down candidates before applying the computationally expensive re-ranking stage.
+- Used a robust background worker and file watcher system to handle asynchronous updates to the search index.
+**Impact**: Provides a 'pro-level' search experience on local machines, bridging the gap between cloud-based search capabilities and local file management.
+
+**Github Link**: https://github.com/sasidharakurathi/Axon-File-Manager
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Support for more complex file formats (OCR for PDFs/Images).
+- Optimization of model sizes for lower-end hardware.
+- Integration of LLM-based 'Chat with your files' functionality.

@@ -1,0 +1,44 @@
+QUERY:
+How does ATS scoring work?
+========================================================================
+INITIAL RETRIEVAL
+========================================================================
+--- Node 1 ---
+Score: 0.8777526205730983
+Node ID: 148575a5-b86c-4dc6-9425-c56ec4a00dd6
+Metadata: {'type': 'module', 'parent': 'ATS', 'name': 'Scoring Engine', 'module': 'scoring'}
+Text: Scoring Engine
+
+Combines deterministic rules, keyword matching, and LLM-assisted signals to rank candidates for the ATS.
+
+========================================================================
+RECURSIVE EXPANSION
+========================================================================
+--- Node 1 ---
+Score: 0.8777526205730983
+Node ID: 148575a5-b86c-4dc6-9425-c56ec4a00dd6
+Metadata: {'type': 'module', 'parent': 'ATS', 'name': 'Scoring Engine', 'module': 'scoring'}
+Text: Scoring Engine
+
+Combines deterministic rules, keyword matching, and LLM-assisted signals to rank candidates for the ATS.
+
+--- Node 2 ---
+Score: 0.8006547185875433
+Node ID: 71651e10-1f9f-4fb9-bd50-7277dcb2afa6
+Metadata: {'type': 'module', 'parent': 'ATS', 'name': 'Face Recognition', 'module': 'face_recognition'}
+Text: Face Recognition
+
+Handles biometric authentication using face encodings so admins can securely access the ATS dashboard.
+
+--- Node 3 ---
+Score: 0.773032097569766
+Node ID: 6d25d955-72dc-40e9-ac50-5eea8776c1c2
+Metadata: {'type': 'module', 'parent': 'ATS', 'name': 'Resume Parser', 'module': 'resume_parser'}
+Text: Resume Parser
+
+Extracts text from PDF and DOCX resumes, cleans the content, and prepares structured candidate data for scoring.
+
+========================================================================
+FINAL ANSWER
+========================================================================
+ATS scoring is handled by the Scoring Engine. It combines deterministic rules, keyword matching, and LLM-assisted signals to rank candidates. This process prepares structured candidate data for the ATS.

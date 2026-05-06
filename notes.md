@@ -1775,3 +1775,356 @@ cleaned_document = document.replace("#", "").replace("*", "").strip()
 Note:
  - Cleaning logic varies based on the type of noise in your data. You can customize it as per your needs.
  - We will cover that in later modules.
+
+## Topic 13: Real-time indexing & streaming data
+ - So far we have been working with static data that we load once and build an index.
+ - Real systems NEVER rebuild the index from scratch.
+ - They update it incrementally as new data comes in.
+ - Here is where Incremental Indexing come into play.
+
+### What is Incremental Indexing?
+ - Simply `Adding / updating / deleting nodes` in an existing index without rebuilding it is called incremental indexing.
+
+### Types of Updates:
+#### 1. Adding new Data
+```text
+New document → nodes → embeddings → insert into index
+```
+
+#### 2. Update Existing Data
+```text
+Old node → replace with new node
+```
+
+#### 3. Delete Data
+```text
+Remove nodes from index
+```
+
+### Implementation of Incremental Indexing
+#### 1. Load Existing Index
+```python
+from llama_index.core import StorageContext, load_index_from_storage
+
+storage_context = StorageContext.from_defaults(
+    persist_dir="./storage"
+)
+
+index = load_index_from_storage(storage_context)
+```
+
+#### 2. Add New Documents (Incremental Insert)
+```python
+new_docs = [
+    Document(
+        text="Sasidhar built a real-time AI desktop assistant",
+        metadata={"type": "project"}
+    )
+]
+
+new_nodes = parser.get_nodes_from_documents(new_docs)
+
+index.insert_nodes(new_nodes)
+
+# persist again
+index.storage_context.persist("./storage")
+```
+
+Basically, new nodes are embedded and then added to the existing vector store and the index is updated without rebuilding.
+
+#### 3. Delete Nodes
+- To delete a node, we need node id. We can get node id from the retrieved nodes or we can maintain a mapping of document to node ids.
+
+```python
+node_ids = [node.node_id for node in nodes_to_delete]
+
+index.delete_nodes(node_ids)
+index.storage_context.persist("./storage")
+```
+
+Here nodes to delete can be identified based on some criteria like outdated information, irrelevant data, etc.
+
+#### 4. Update Data
+- In LlamaIndex, there is no direct update method. We need to delete the old node and insert the new node.
+
+```python
+# delete old
+index.delete_nodes([old_node_id])
+
+# insert updated
+index.insert_nodes(new_nodes)
+```
+
+### Key points:
+ - Index is NOT static. It is a living data structure. It updates as new data comes in.
+ - Incremental indexing is much faster (milliseconds) than rebuilding the index (seconds to minutes).
+ - Most commonly we consider `node_id = hash(document_id + chunk_index)` to maintain a mapping between documents and nodes for easy updates and deletions.
+
+### Here is a mini [task](practice/Module%203/Topic%2013/task.py) for us to understand incremental indexing better:
+1. Build an index with some initial data. ([primary_knowledge_base.txt](practice/Module%203/Topic%2013/primary_knowledge_base.txt))
+2. Then Persist the index. (We have learnt this in Module 1 - Topic 4)
+3. Now, Add new document to the index. ([new_knowledge_base.txt](practice/Module%203/Topic%2013/new_knowledge_base.txt))
+4. Query the index to see if the new information is reflected in the answer.
+    ```text
+    Ex: "What projects has Sasidhar built?"
+    ```
+5. Then try deleting a node from the index.
+6. Query again to see if the deleted information is removed from the answer.
+
+#### You can check the comments in the [task.py](practice/Module%203/Topic%2013/task.py) for step by step explantion.
+
+# Module 4 - Advanced Retrieval Systems
+## Topic 14: Metadata Filtering & Structured Retrieval
+ - This is one of the most powerful concepts in production RAG systems.
+ - It focuses on `retrieving the RIGHT data subset instead of searching everything blindly`.
+ - This is where our system starts behaving like a database-aware intelligence layer.
+
+### Why Semantic Search Alone Fails??
+ - Right now our retriver searches `all nodes`.
+ - This is fine for `small datasets`.
+ - But imagine in future we want to add all our resume data like:
+    ```text
+    projects, resumes, internships, logs, chats, reports
+    ```
+ - Now if we query for `"What AI projects has Sasidhar built?"`, The Semantic search mar retrieve irrelevant nodes like:
+    ```text
+    "Sasidhar's internship at Supraja Technologies company"
+    ```
+
+### What is Metadata Filtering?
+#### Restricting the retrieval using metadata rules BEFORE semantic search is called metadata filtering.
+```text
+Filter first → semantic search second
+```
+#### Example:
+Metadata:
+```python
+metadata={
+    "type": "project",
+    "domain": "AI"
+}
+```
+Query:
+```text
+"AI projects"
+```
+Retriever logic:
+```text
+1. Filter type="project"
+2. Filter domain="AI"
+3. Run semantic search
+```
+
+### Implementation of Metadata Filtering
+#### 1. Create Metadata included Documents
+```python
+documents = [
+    Document(
+        text="ATS system with Gemini and RAG",
+        metadata={
+            "type": "project",
+            "domain": "AI"
+        }
+    ),
+
+    Document(
+        text="Cybersecurity internship experience",
+        metadata={
+            "type": "experience",
+            "domain": "security"
+        }
+    )
+]
+```
+
+#### 2. Build Nodes + Index
+```python
+nodes = parser.get_nodes_from_documents(documents)
+
+index = VectorStoreIndex(
+    nodes,
+    embed_model=embed_model
+)
+```
+
+#### 3. Apply Metadata Filters
+```python
+from llama_index.core.vector_stores import MetadataFilters, ExactMatchFilter
+
+filters = MetadataFilters(
+    filters=[
+        ExactMatchFilter(
+            key="type",
+            value="project"
+        )
+    ]
+)
+```
+#### 4. Filtered Retriever
+```python
+retriever = index.as_retriever(
+    filters=filters,
+    similarity_top_k=3
+)
+```
+
+#### 5. Query
+```python
+nodes = retriever.retrieve(
+    "What AI systems has Sasidhar built?"
+)
+
+for n in nodes:
+    print(n.text)
+    print(n.metadata)
+```
+
+#### Basically, here we are filtering the nodes based which are of `type: project`
+
+#### We can also apply multiple filters together like:
+```python
+filters = MetadataFilters(
+    filters=[
+        ExactMatchFilter(
+            key="type",
+            value="project"
+        ),
+        ExactMatchFilter(
+            key="domain",
+            value="AI"
+        )
+    ]
+)
+```
+ - This will filter nodes that are based of `AI projects`.
+
+#### Try to master this metadata filtering concept, because it critical later for: `routing, agents, recursive retrieval`
+
+#### Here is a mini [task](practice/Module%204/Topic%2014/task.py) for us to understand metadata filtering better:
+1. Create 2 project docs of `type=project` and 2 experience docs of `type=experience` with appropriate metadata.
+2. Then Query `"What AI projects has Sasidhar built?"` without any filters and observe the retrieved nodes.
+3. Now apply metadata filter to retrieve only `type=project` and observe the retrieved nodes.
+
+#### Check the [task.py](practice/Module%204/Topic%2014/task.py) and [output.txt](practice/Module%204/Topic%2014/output.txt) to see how metadata filtering works in practice.
+
+## Topic 15: Recursive Retrieval (retrieving over retrieved nodes)
+#### So, we are finally entering in to the teritory of `advanced retrieval architectures`.
+Basically the normal retrieval process is:
+```text
+Query → retrieve nodes → answer
+```
+
+This works fine in the entry level RAG systems. But what if the `Data` is `distributed across multiple levels`
+
+For example, consider my `ATS Project`.
+ - Here `ATS System` is the Top Level Node.
+ - And following are linked Nodes:
+    ```text
+    Resume Parser
+    Face Recognition
+    Scoring Engine
+    Interview Module
+    ```
+If I query for `"How does the ATS scoring system work?"`.
+
+#### This is where normal retrieval might fail. The retriever may only fetch `"ATS system overview"` but not `"Scoring engine implementation details"`.
+
+### What is Recursive Retrieval?
+ - Recursive retrieval is a technique where the retriever can fetch nodes, and then use those nodes as context to fetch more relevant nodes in a recursive manner until it gathers enough information to answer the query.
+
+So now the update retrieval flow looks like:
+```text
+Query
+ ↓
+Retrieve parent node
+ ↓
+Follow references
+ ↓
+Retrieve child nodes
+ ↓
+Build richer context
+```
+
+#### This is very similar to `Knowledge Graph Traversal`
+- Instead of flat search (complete single search), we do `multi-hop retrieval`.
+
+### Implementation of Recursive Retrieval
+#### 1. Create Parent Documents
+```python
+project_doc = Document(
+    text="ATS System Overview",
+    metadata={"type": "project"}
+)
+```
+
+#### 2. Create Child Documents
+```python
+scoring_doc = Document(
+    text="ATS scoring engine combines LLM analysis with deterministic weights.",
+    metadata={
+        "parent": "ATS",
+        "module": "scoring"
+    }
+)
+
+resume_doc = Document(
+    text="Resume parser extracts text from PDFs using PyPDF2.",
+    metadata={
+        "parent": "ATS",
+        "module": "parser"
+    }
+)
+```
+
+#### Now the structure is like:
+```text
+ATS
+ ├── Scoring Engine
+ └── Resume Parser
+ ```
+
+#### Recursive Retrieval Flow
+ - On first retrieval based on query `"How does ATS scoring work?"` , we get the parent node `ATS System Overview`.
+ - Then we recursively retrieve child nodes that are linked to `ATS` and match the context of `scoring`.
+
+### Manual Recursive Pipeline
+#### 1. Initial Retrieval
+```python
+retriever = index.as_retriever()
+
+initial_nodes = retriever.retrieve(
+    "How does ATS scoring work?"
+)
+```
+
+#### 2. Recursive Expansion
+```python
+expanded_nodes = []
+
+for node in initial_nodes:
+    metadata = node.metadata
+
+    if metadata.get("type") == "project":
+        related = index.as_retriever(
+            filters=MetadataFilters(
+                filters=[
+                    ExactMatchFilter(
+                        key="parent",
+                        value="ATS"
+                    )
+                ]
+            )
+        ).retrieve("scoring")
+
+        expanded_nodes.extend(related)
+```
+
+**This is how Recurisve Retrieval works.** <br>
+**Try to Master this Topic because this topic is the foundation for the `agents`, `graph RAG` (Advanced RAG Concept) and `reasoning systems`**
+
+#### Here is a mini [task](practice/Module%204/Topic%2015/task.py) for us to understand recursive retrieval better:
+1. Create a parent document for `ATS Overview`.
+2. Create child documents for `Scoring Engine`, `Resume Parser` and `Face Recognition` with a proper metadata linking them to the parent.
+3. Implement a manual recursive retrieval pipeline to fetch the `Scoring Engine` details when queried with `"How does ATS scoring work?"`
+
+#### Check the [task.py](practice/Module%204/Topic%2015/task.py) and [output.txt](practice/Module%204/Topic%2015/output.txt) to see how recursive retrieval works in practice.

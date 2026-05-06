@@ -1,0 +1,51 @@
+### Project: ATS (Application Tracking System)
+**Type**: personal / research
+
+**Description**: A comprehensive Django-based Application Tracking System featuring an AI-assisted resume analysis pipeline and biometric face-recognition authentication.
+
+**Problem Solved**: Automates the tedious process of resume screening and candidate evaluation using LLMs, while providing a secure and modern authentication method through face recognition.
+
+**Your Role**: Lead Developer
+
+**Tech Stack**:
+- Python
+- Django
+- Google Gemini (Generative AI)
+- Ollama (Local LLM Support)
+- Face Recognition (dlib/OpenCV)
+- PyPDF2
+- python-docx
+- MySQL
+- Channels (WebSockets)
+- Tailwind CSS
+**Architecture**: A monolithic Django architecture with specialized modular sub-systems: a ResumeParser (PDF/Docx extraction + LLM Orchestration), a FaceRecognition module (biometric login), and an integrated Scoring Engine for deterministic candidate ranking.
+
+**Features**:
+- LLM-Powered Resume Analysis: Context-aware parsing using Gemini or Ollama.
+- Biometric Face Login: Secure authentication using real-time face recognition.
+- Rule-Based Scoring Engine: Combines LLM outputs with deterministic weights and keyword matching.
+- Batch Resume Processing: Asynchronous-ready processing for multiple candidate uploads.
+- Job Management Portal: Create and manage job descriptions with automated folder structure.
+- Interview Management: Automated email invitations and interview report tracking.
+- Real-time Face Encoding: Admin tools to capture and cache biometric data with multiprocessing support.
+- Candidate Dashboard: Visual tracking of application status and AI-generated scores.
+**Challenges**:
+- Handling LLM hallucinations and ensuring structured JSON outputs for reliable database persistence.
+- Optimizing high-latency biometric operations (face encoding) to prevent blocking the web thread.
+- Managing large-scale resume parsing while maintaining high accuracy across various file formats (PDF/DOCX).
+**Solutions**:
+- Implemented a robust client wrapper with retry logic and fallbacks for LLM JSON parsing.
+- Used Python's multiprocessing for parallel face encoding and implemented a modification-based caching system.
+- Integrated a dual-layered scoring engine that merges probabilistic LLM insights with deterministic business rules.
+**Impact**: Significantly reduces time-to-hire by providing instant, detailed AI feedback on candidates and modernizes the HR workflow with biometric security.
+
+**Github Link**: https://github.com/sasidharakurathi/ATS
+
+**Demo Link**: 
+
+**Status**: completed
+
+**Future Improvements**:
+- Migrate raw SQL interview tables to Django ORM models for better scalability.
+- Integrate a task queue like Celery for true background batch processing.
+- Expand reporting with automated CSV/XLSX exports using pandas.
