@@ -32,3 +32,8 @@
 ### Goal: Build smart retrieval beyond basic similarity.
 14. Metadata Filtering & Structured Retrieval
 15. Recursive Retrieval (retrieving over retrieved nodes)
+16. Router Query Engine (Multi-Index Intelligent Routing)
+17. Graph RAG (Relationship-Aware Retrieval)
+
+## MODULE 5 - Agents & Tool Use
+18. LlamaIndex Agents (ReAct + Function Calling)

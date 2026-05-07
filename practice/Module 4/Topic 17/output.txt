@@ -1,0 +1,3 @@
+===================================================================
+The Application Tracking System (ATS) utilizes Python, Django, Google Gemini (Generative AI), Ollama (for local LLM support), Face Recognition (dlib/OpenCV), PyPDF2, python-docx, MySQL, Channels (WebSockets), and Tailwind CSS.
+===================================================================

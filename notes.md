@@ -2128,3 +2128,261 @@ for node in initial_nodes:
 3. Implement a manual recursive retrieval pipeline to fetch the `Scoring Engine` details when queried with `"How does ATS scoring work?"`
 
 #### Check the [task.py](practice/Module%204/Topic%2015/task.py) and [output.txt](practice/Module%204/Topic%2015/output.txt) to see how recursive retrieval works in practice.
+
+## Topic 16: Router Query Engine (Multi-Index Intelligent Routing)
+ - Right now we have a single index. But what if we have multiple indices for different data sources or different domains?
+ - Different data types require different indexing and retrieval strategies. For example:
+
+    | Data Type | Best Index       |
+    | --------- | ---------------- |
+    | Projects  | Vector           |
+    | Reports   | Tree             |
+    | Summaries | SummaryIndex     |
+    | Logs      | Window retrieval |
+
+When the query is `"Summarize Sasidhar's experience"` then we should use `SummaryIndex`
+<br> But When the query is `"What technologies were used in ATS?"` then we should use `VectorIndex`.
+
+### What is Router Query Engine?
+ - IT's a query engine that intelligently selects WHICH index/tool should answer the query.
+```text
+User Query
+   ↓
+Router
+   ↓
+Choose best index/tool
+   ↓
+Execute query
+```
+
+### Implementation of Router Query Engine
+#### We'll build:
+ - Vector index → factual retrieval
+ - Summary index → summarization
+ - Router → choose intelligently
+
+#### 1. Create Multiple Indexes
+
+#### Vector Index
+```python
+vector_index = VectorStoreIndex(
+    nodes,
+    embed_model=embed_model
+)
+```
+
+#### Summary Index
+```python
+summary_index = SummaryIndex(nodes, llm=llm)
+```
+
+#### 2. Create Query Engine
+```python
+vector_engine = vector_index.as_query_engine(
+    llm=llm,
+    response_mode="compact"
+)
+
+summary_engine = summary_index.as_query_engine(
+    llm=llm,
+    response_mode="tree_summarize"
+)
+```
+
+#### 3. Wrap as Tools
+```python
+from llama_index.core.tools import QueryEngineTool
+
+vector_tool = QueryEngineTool.from_defaults(
+    query_engine=vector_engine,
+    description=(
+        "Useful for factual questions about projects, "
+        "technologies, and implementation details."
+    )
+)
+
+summary_tool = QueryEngineTool.from_defaults(
+    query_engine=summary_engine,
+    description=(
+        "Useful for summarizing experience, profiles, "
+        "and overall overviews."
+    )
+)
+```
+
+Here description plays major role because the router uses it to decide which tool to use based on the query.
+
+#### 4. Create Router
+```python
+from llama_index.core.query_engine import RouterQueryEngine
+from llama_index.core.selectors import LLMSingleSelector
+
+router = RouterQueryEngine(
+    selector=LLMSingleSelector.from_defaults(llm=llm),
+    query_engine_tools=[
+        vector_tool,
+        summary_tool
+    ],
+    llm=llm
+)
+```
+
+#### 5. Query
+```python
+response = router.query(
+    "Give an overview of Sasidhar's experience"
+)
+
+print(response.response)
+```
+
+#### Here router reasons on the query and decides to use the `summary_tool`.
+
+Now query:
+```python
+router.query(
+    "What technologies were used in ATS?"
+)
+```
+
+#### Here router reasons on the query and decides to use the `vector_tool`.
+
+
+### This is the foundation for `agents`, `multi-agent systems`, `tool use` and `autonomous workflows`.
+### Router is a `primitive agent`. The `multi-agent orchestration` builds on this exact concept.
+
+#### Here is a mini [task](practice/Module%204/Topic%2016/task.py) for us to understand router query engine better:
+#### 1. Build:
+ - Vector index
+ - Summary index
+ - Router engine
+
+#### 2. Test queries:
+ - "What technologies are used in ATS?" (Should route to vector index)
+ - "Summarize Sasidhar's overall profile" (Should route to summary index)
+
+#### Check the [task.py](practice/Module%204/Topic%2016/task.py) and [output.txt](practice/Module%204/Topic%2016/output.txt) to see how router query engine works in practice.
+
+## Topic 17. Graph RAG (Relationship-Aware Retrieval)
+#### We are finally touching the currently hyped topic in the internet. `Graph RAG`
+#### Most of the developers think that Graph RAG is better version of Normal RAG. Which is absoultely wrong ❌
+
+#### Both RAG and Graph RAG are different tools for different use cases.
+ - Normal RAG is better for `flat data` where there are no complex relationships between the nodes.
+ - Graph RAG is better for `highly interconnected data` where relationships between nodes are critical
+
+#### So a better RAG architecture is to use a `hybrid approach` where we use normal RAG for flat data and Graph RAG for interconnected data.
+
+### What is Graph RAG?
+ - Graph RAG is a retrieval architecture that models the data as a graph with nodes and edges, where nodes represent pieces of information and edges represent relationships between them. 
+ - The retriever can then traverse this graph to find relevant information based on both content and relationships.
+
+#### Basically Graph RAG represents data as entities + relationships instead of isolated chunks.
+
+For example:
+```text
+ATS
+ ├── uses → Gemini
+ ├── contains → Resume Parser
+ └── includes → Scoring Engine
+ ```
+
+ <p style="font-size: 20px">Graph RAG is powerful for relationship oriented questions.</p>
+
+ ### Conceptual Implementation of Graph RAG
+#### 1. Extract Entities
+```python
+ATS
+Gemini
+Resume Parser
+Scoring Engine
+PyPDF2
+```
+
+#### 2. Extract Relationships
+```text
+ATS → uses → Gemini
+ATS → contains → Resume Parser
+Resume Parser → uses → PyPDF2
+```
+
+#### 3. Build Graph Structure
+```python
+graph = {
+    "ATS": [
+        ("uses", "Gemini"),
+        ("contains", "Resume Parser")
+    ],
+
+    "Resume Parser": [
+        ("uses", "PyPDF2")
+    ]
+}
+```
+
+#### 4. Now Query becomes Graph Traversal
+Query:
+```text
+"What part handles PDFs?"
+```
+Traversal:
+```text
+PDF
+↑
+used by Resume Parser
+↑
+contained in ATS
+```
+
+<hr>
+
+## Focus on this Section it's an Important Concept:
+### Are you Confused about Graph RAG?? I'm too.
+#### Okay, I understand Graph RAG. it is a relationship based index and retrieval system. 
+#### But in the above [conceptual implementation](./notes.md#2309), we manually need to preprocess and structure the data to form the graph. How is it possible to do for the Huge Data. (like thousands of documents, millions of nodes)
+
+#### I have researched a lot on this topic for 2 days. And I found the best possible architecture to generate the `Graph RAG Index`
+
+#### Here is the architecture:
+```text
+Load out Knowledge Base
+ ↓
+Semantic Chunking (Most Important Step)
+ ↓
+Build Knowledge Graph Index
+ ↓
+Query Graph
+```
+
+#### Generally, most of the developers miss the `semantic chunking` step and directly try to build a graph from raw data.
+#### The `semantic chunking` plays major role in building an effective graph RAG system because it creates meaningful nodes that can be easily connected with relationships.
+
+#### Okay let's try to understand this with a mini task
+<hr>
+
+#### Here is a mini [task](practice/Module%204/Topic%2017/task.py) for us to understand Graph RAG better:
+We are going to follow the exact [achitecture](./notes.md#2346) mentioned above to build a Graph RAG system.
+
+#### Check the [task.py](practice/Module%204/Topic%2017/task.py) and [output.txt](practice/Module%204/Topic%2017/output.txt) to see how Graph RAG works in practice.
+
+This is how Graph RAG stored my ats project knowledge base in the graph format:
+```text
+Ats → Features → Ai-assisted resume analysis pipeline
+Ats → Is → Application tracking system
+Ats → Architecture → Monolithic django
+Ats → Type → Personal/research
+Ats → Automates → Resume screening
+Ats → Uses → Google gemini
+Ats → Features → Biometric face-recognition authentication
+Ats → Github link → Https://github.com/sasidharakurathi/ats
+Ats → Built with → Django
+Ats → Reduces → Time-to-hire
+```
+
+### Note: 
+- Graph RAG uses multiple LLM calls for entity and relationship extraction for indexing. So it is more expensive than normal RAG. 
+- So use it only when you have complex relationships in your data that are critical for answering queries. 
+- Otherwise, normal RAG is more efficient and easier to implement. 
+
+# Module 5 - Agents & Tool Use
+## Topic 18: LlamaIndex Agents (ReAct + Function Calling)

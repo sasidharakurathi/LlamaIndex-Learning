@@ -1,0 +1,22 @@
+===================================================================
+Querying the router `Give an overview of Sasidhar's experience`...
+===================================================================
+Query: Give an overview of Sasidhar's experience
+Selected Tool Info: {'977e225b-71f3-4488-a1f4-b3bae3aa4d08': {}, 'selector_result': MultiSelection(selections=[SingleSelection(index=1, reason="The question 'Give an overview of Sasidhar's experience' directly aligns with the description in choice (2), which states 'Useful for summarizing experience, profiles, and overall overviews'. Choice (1) is more focused on specific factual details rather than a general overview of experience.")])}
+Response to query:
+
+Sasidhar Akurathi is a final-year Computer Science student currently working as a Backend & AI Engineering Intern. His expertise includes building scalable FastAPI and Django backends, orchestrating LLM agents with n8n and Google ADK, and specializing in AI Automation and DevOps. He is pursuing a B.Tech in Computer Science at P.S.C.M.R College of Engineering & Technology, expected to graduate in 2026, with a current CGPA of 8.5.
+
+
+===================================================================
+===================================================================
+Querying the router `What technologies were used in ATS?`...
+===================================================================
+Query: What technologies were used in ATS?
+Selected Tool Info: {'66e70302-283a-44c5-888b-51b89f16833f': {}, '16f62162-0d30-4586-b17e-e38261a11b8d': {}, 'selector_result': MultiSelection(selections=[SingleSelection(index=0, reason="The question 'What technologies were used in ATS?' is a factual question specifically asking about 'technologies'. Choice (1) explicitly states it is 'Useful for factual questions about projects, technologies, and implementation details', which directly aligns with the nature of the given question.")])}
+Response to query:
+
+The Application Tracking System (ATS) utilized Python, Django, Google Gemini, Ollama, Face Recognition (dlib/OpenCV), PyPDF2, python-docx, MySQL, Channels, and Tailwind CSS.
+
+
+===================================================================
