@@ -1,0 +1,69 @@
+===================================================================
+Querying the ReAct agent: "What projects has Sasidhar built?"
+===================================================================
+[tick] add: AgentWorkflowStartEvent(user_msg='What projects has Sasidhar built? Use portfolio_qu...', chat_history=None, memory=None, max_iterations=None, early_stopping_method=None)
+[init_run:0] started from AgentWorkflowStartEvent
+[init_run:0] complete with AgentInput
+[tick] add: AgentInput(input=[ChatMessage(role=<MessageRole.USER: 'user'>, additional_kwargs={}, blocks=[TextBlock(block_type='text', text='What projects has Sasidhar built? Use portfolio_query_tool before ans...
+[setup_agent:0] started from AgentInput
+[setup_agent:0] complete with AgentSetup
+[tick] add: AgentSetup(input=[ChatMessage(role=<MessageRole.SYSTEM: 'system'>, additional_kwargs={}, blocks=[TextBlock(block_type='text', text="You are an assistant that STRICTLY answers questions about Sasidh...
+[run_agent_step:0] started from AgentSetup
+[run_agent_step:0] complete with AgentOutput
+[tick] add: AgentOutput(response=ChatMessage(role=<MessageRole.ASSISTANT: 'assistant'>, additional_kwargs={'thought_signatures': [None], 'prompt_tokens': 663, 'completion_tokens': 520, 'total_tokens': 1231}, b...
+[parse_agent_output:0] started from AgentOutput
+[result] StopEvent(result=AgentOutput(response=ChatMessage(role=<MessageRole.ASSISTANT: 'assistant'>, additional_kwargs={'thought_signatures': [None], 'prompt_tokens': 663, 'completion_tokens': 520, 'total_...
+[parse_agent_output:0] complete with StopEvent
+[tick] add: AgentWorkflowStartEvent(user_msg='Mandatory: Call portfolio_query_tool first, then a...', chat_history=None, memory=None, max_iterations=None, early_stopping_method=None)
+[init_run:0] started from AgentWorkflowStartEvent
+[init_run:0] complete with AgentInput
+[tick] add: AgentInput(input=[ChatMessage(role=<MessageRole.USER: 'user'>, additional_kwargs={}, blocks=[TextBlock(block_type='text', text='Mandatory: Call portfolio_query_tool first, then answer using only it...
+[setup_agent:0] started from AgentInput
+[setup_agent:0] complete with AgentSetup
+[tick] add: AgentSetup(input=[ChatMessage(role=<MessageRole.SYSTEM: 'system'>, additional_kwargs={}, blocks=[TextBlock(block_type='text', text="You are an assistant that STRICTLY answers questions about Sasidh...
+[run_agent_step:0] started from AgentSetup
+[run_agent_step:0] complete with AgentOutput
+[tick] add: AgentOutput(response=ChatMessage(role=<MessageRole.ASSISTANT: 'assistant'>, additional_kwargs={'thought_signatures': [None], 'prompt_tokens': 672, 'completion_tokens': 612, 'total_tokens': 1332}, b...
+[parse_agent_output:0] started from AgentOutput
+[result] StopEvent(result=AgentOutput(response=ChatMessage(role=<MessageRole.ASSISTANT: 'assistant'>, additional_kwargs={'thought_signatures': [None], 'prompt_tokens': 672, 'completion_tokens': 612, 'total_...
+[parse_agent_output:0] complete with StopEvent
+[tick] add: AgentWorkflowStartEvent(user_msg='You must call portfolio_query_tool now. Do not ans...', chat_history=None, memory=None, max_iterations=None, early_stopping_method=None)
+[init_run:0] started from AgentWorkflowStartEvent
+[init_run:0] complete with AgentInput
+[tick] add: AgentInput(input=[ChatMessage(role=<MessageRole.USER: 'user'>, additional_kwargs={}, blocks=[TextBlock(block_type='text', text='You must call portfolio_query_tool now. Do not answer directly. Query...
+[setup_agent:0] started from AgentInput
+[setup_agent:0] complete with AgentSetup
+[tick] add: AgentSetup(input=[ChatMessage(role=<MessageRole.SYSTEM: 'system'>, additional_kwargs={}, blocks=[TextBlock(block_type='text', text="You are an assistant that STRICTLY answers questions about Sasidh...
+[run_agent_step:0] started from AgentSetup
+[run_agent_step:0] complete with AgentOutput
+[tick] add: AgentOutput(response=ChatMessage(role=<MessageRole.USER: 'user'>, additional_kwargs={}, blocks=[]), structured_response=None, current_agent_name='Agent', raw=None, tool_calls=[], retry_messages=[Ch...
+[parse_agent_output:0] started from AgentOutput
+[parse_agent_output:0] complete with AgentInput
+[tick] add: AgentInput(input=[4 items], current_agent_name='Agent')
+[setup_agent:0] started from AgentInput
+[setup_agent:0] complete with AgentSetup
+[tick] add: AgentSetup(input=[5 items], current_agent_name='Agent')
+[run_agent_step:0] started from AgentSetup
+[run_agent_step:0] complete with AgentOutput
+[tick] add: AgentOutput(response=ChatMessage(role=<MessageRole.ASSISTANT: 'assistant'>, additional_kwargs={'thought_signatures': [None], 'prompt_tokens': 772, 'completion_tokens': 86, 'total_tokens': 907}, blo...
+[parse_agent_output:0] started from AgentOutput
+[tick] add: ToolCall(tool_name='portfolio_query_tool', tool_kwargs={'input': 'What projects has Sasidhar built?'}, tool_id='698a9f8d-2ee7-4057-8aa7-91d257150683')
+[call_tool:0] started from ToolCall
+[parse_agent_output:0] complete with no result
+[call_tool:0] complete with ToolCallResult
+[tick] add: ToolCallResult(tool_name='portfolio_query_tool', tool_kwargs={'input': 'What projects has Sasidhar built?'}, tool_id='698a9f8d-2ee7-4057-8aa7-91d257150683', tool_output=ToolOutput(blocks=[TextBlock...
+[aggregate_tool_results:0] started from ToolCallResult
+[aggregate_tool_results:0] complete with AgentInput
+[tick] add: AgentInput(input=[ChatMessage(role=<MessageRole.USER: 'user'>, additional_kwargs={}, blocks=[TextBlock(block_type='text', text='You must call portfolio_query_tool now. Do not answer directly. Query...
+[setup_agent:0] started from AgentInput
+[setup_agent:0] complete with AgentSetup
+[tick] add: AgentSetup(input=[ChatMessage(role=<MessageRole.SYSTEM: 'system'>, additional_kwargs={}, blocks=[TextBlock(block_type='text', text="You are an assistant that STRICTLY answers questions about Sasidh...
+[run_agent_step:0] started from AgentSetup
+[run_agent_step:0] complete with AgentOutput
+[tick] add: AgentOutput(response=ChatMessage(role=<MessageRole.ASSISTANT: 'assistant'>, additional_kwargs={'thought_signatures': [None], 'prompt_tokens': 889, 'completion_tokens': 48, 'total_tokens': 937}, blo...
+[parse_agent_output:0] started from AgentOutput
+[result] StopEvent(result=AgentOutput(response=ChatMessage(role=<MessageRole.ASSISTANT: 'assistant'>, additional_kwargs={'thought_signatures': [None], 'prompt_tokens': 889, 'completion_tokens': 48, 'total_t...
+[parse_agent_output:0] complete with StopEvent
+
+Final response:
+Sasidhar has built the following projects: ATS (Application Tracking System) and Axon-File-Manager.

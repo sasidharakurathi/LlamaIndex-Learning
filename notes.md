@@ -2386,3 +2386,203 @@ Ats → Reduces → Time-to-hire
 
 # Module 5 - Agents & Tool Use
 ## Topic 18: LlamaIndex Agents (ReAct + Function Calling)
+### What is an Agent?
+- An agent is an LLM driven reasoning loop that can decide what actions to take to achieve a goal.
+
+### Core difference between Agent and RAG:
+#### Traditional RAG:
+```text
+Query
+↓
+Retrieve
+↓
+Generate answer
+```
+
+#### Agentic System:
+```text
+Goal
+↓
+Reason
+↓
+Choose tool
+↓
+Execute tool
+↓
+Observe result
+↓
+Reason again
+↓
+Final answer
+```
+
+#### Based on above flow, we can see that `Agents are not just just chatbots. They are decision-making loops.`
+
+#### The Two Core Agent Paradigms
+1. ReAct Agents
+2. Function Calling Agents
+
+### 1. ReAct (Reason + Act)
+This is the basic / foundational agent pattern.
+
+#### Core Idea:
+The LLMs can reason about the query step by step.
+```text
+Thought:
+I need more information.
+
+Action:
+Use search tool.
+
+Observation:
+Retrieved ATS data.
+
+Thought:
+Now I can answer.
+```
+
+#### The ReAct loop:
+```text
+Thought → Action → Observation → Thought → ...
+```
+This loop continues until the agent decides it has enough information to answer the query or it reaches a max step limit.
+
+#### Before ReAct LLMs only generated text. But with ReAct, LLMs could interact with systems.
+
+### Implementation of ReAct Agents
+#### 1. Create Query Tool
+We already know how to create query tools using LlamaIndex.
+```python
+from llama_index.core.tools import QueryEngineTool
+
+query_tool = QueryEngineTool.from_defaults(
+    query_engine=index.as_query_engine(llm=llm),
+    name="portfolio_search",
+    description="Searches Sasidhar's projects and experience"
+)
+```
+
+#### 2. Create ReAct Agent
+```python
+from llama_index.core.agent.workflow import ReActAgent
+
+agent = ReActAgent.from_tools(
+    tools=[query_tool],
+    llm=llm,
+    verbose=True
+)
+```
+
+#### 3. Run Agent
+```python
+response = agent.chat(
+    "What projects has Sasidhar built?"
+)
+
+print(response)
+```
+
+#### What actually happens here is:
+```text
+Thought:
+I should search the portfolio.
+
+Action:
+portfolio_search
+
+Observation:
+ATS, Axon-File-Manager
+
+Thought:
+Now I can answer.
+```
+
+Here the agent just do not execute the tool once. It also reasons about the observation and decides whether to execute more tools or not.
+
+### 2. Function Calling Agents
+#### This is the modern paradigm used by most of the production systems. like `Gemini`, `OpenAI` and `Claude` etc
+
+#### The Core difference between ReAct and Function Calling:
+In `ReAct`, the LLM outputs text `Action: search_tool`. and we parse it.
+In `Function Calling`, the LLM outputs structured calls:
+```json
+{
+  "tool": "search_tool",
+  "arguments": {
+    "query": "ATS"
+  }
+}
+```
+
+This is much safer and more efficient.
+
+### Implementation of Function Calling Agents
+#### 1. Create Python Function
+```python
+def get_current_role():
+    return "Final-year CS student and AI engineering intern"
+```
+
+#### 2. Convert to Tool
+```python
+from llama_index.core.tools import FunctionTool
+
+role_tool = FunctionTool.from_defaults(
+    fn=get_current_role,
+    name="current_role_tool",
+    description="Returns Sasidhar's current role"
+)
+```
+
+#### 3. Agent With Function Tools
+```python
+agent = ReActAgent.from_tools(
+    tools=[role_tool],
+    llm=llm,
+    verbose=True
+)
+```
+
+#### 4. Query
+```python
+response = agent.chat(
+    "What is Sasidhar currently doing?"
+)
+
+print(response)
+```
+
+Here the LLM reasons and decides it needs `role info` and calls the `current_role_tool` and then synthesizes the response into json.
+
+### This is the foundation of AI assistants.
+#### These tools can be anything. like:
+ - APIs
+ - DB access
+ - filesystem
+ - browser
+ - code execution
+ - vector retrieval
+
+ ### Here is a mini chanllenge for us to understand agents better:
+ #### 1. ReAct Retrieval Agent
+ 1. Create a portfolio query tool
+ 2. Create a ReAct agent with that tool
+ 3. Query the agent with `"What projects has Sasidhar built?"`
+ #### Check the `task 1.py` and `output 1.txt` to see how the ReAct agent works in practice.
+
+ #### 2. Function Tool
+ 1. Create a python function named `get_skills` which returns a list of skills.
+ 2. Then convert it into a FunctionTool
+ 3. Create a ReAct agent with that tool
+ 4. Query the agent with `"What are Sasidhar's skills?"`
+#### Check the `task 2.py` and `output 2.txt` to see how the Function Calling agent works in practice.
+
+ #### Set `verbose=True` in the agent to see the reasoning steps.
+
+### Oberservations:
+ - Based on my obeservation, sometimes the `ReAct` Agent may no call the tool and the LLM hallucinates the answer. This is a common issue with ReAct agents because they rely on the LLM to decide when to call the tool. So it is not always reliable. 
+ - On the other hand, `Function Calling` agents are more structured and reliable because the LLM has to output a specific format to call the tool. So it is less likely to hallucinate and more likely to call the tool when needed.
+ - These agents might need to iterate multiple times to get the final answer. So their `response time` might be higher than a normal RAG system. 
+ - They are more powerful and flexible because they can interact with tools and APIs, but they also require more careful design and testing to ensure they work correctly.
+
+

@@ -1,0 +1,24 @@
+## Profile
+
+**Full Name**: Sasidhar Akurathi
+
+**Headline**: Building Scalable FastAPI and Django Backends | Orchestrating LLM Agents with n8n and Google ADK | AI Automation & DevOps
+
+**Current Role**: Final-year Computer Science Student | Backend & AI Engineering Intern
+
+### Education
+- **Degree**: B.Tech Computer Science
+- **College**: P.S.C.M.R College of Engineering & Technology
+- **Year**: 2022 - 2026
+- **Cgpa**: 8.5
+
+
+**Permanent Location**: Vijayawada, Andhra Pradesh, India
+
+**Current Location**: Hyderabad, Telangana, India
+
+### Emails
+- akurathisasidhar4@gmail.com
+
+**Social Links**: {'linkedin': 'https://www.linkedin.com/in/sasidhar-akurathi', 'github': 'https://github.com/sasidharakurathi', 'portfolio': 'https://sasidharakurathi-portfolio.vercel.app/'}
+
